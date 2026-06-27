@@ -20,7 +20,7 @@
             background: #1a1a1a;
             border-radius: 4px;
             padding: 30px 20px 24px;
-            max-width: 420px;
+            max-width: 640px;
             width: 100%;
             text-align: center;
             border: 1px solid #3a3a3a;
@@ -76,6 +76,14 @@
             border-radius: 4px;
             padding: 16px;
             border: 1px solid #333;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+        .qr-item:hover,
+        .qr-item:active {
+            border-color: #555;
+            box-shadow: 0 0 12px rgba(255,255,255,0.06);
         }
         .qr-item img {
             width: 100%;
@@ -83,6 +91,9 @@
             border-radius: 2px;
             display: block;
             margin: 0 auto;
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-drag: none;
         }
         .qr-label {
             margin-top: 10px;
@@ -94,6 +105,85 @@
             margin-top: 4px;
             color: #555;
             font-size: 11px;
+        }
+        .qr-hint .highlight {
+            color: #888;
+            font-style: normal;
+        }
+        /* 桌面端 — 二维码并排 + 下载提示 */
+        @media (min-width: 560px) {
+            .qr-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .qr-item img {
+                max-width: 200px;
+            }
+            .qr-hint .mobile-only {
+                display: none;
+            }
+            .qr-hint .desktop-only {
+                display: inline;
+            }
+        }
+        /* 移动端 — 竖排 + 扫码提示 */
+        @media (max-width: 559px) {
+            .qr-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                max-width: 420px;
+            }
+            .qr-item img {
+                max-width: 220px;
+            }
+            .qr-hint .mobile-only {
+                display: inline;
+            }
+            .qr-hint .desktop-only {
+                display: none;
+            }
+        }
+        /* 下载按钮（桌面 hover 显示） */
+        .qr-item .download-overlay {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: #ccc;
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 3px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            letter-spacing: 1px;
+        }
+        @media (hover: hover) {
+            .qr-item:hover .download-overlay {
+                opacity: 1;
+            }
+        }
+        /* Toast 提示 */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.85);
+            color: #ccc;
+            font-size: 13px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 999;
+            white-space: nowrap;
+        }
+        .toast.show {
+            opacity: 1;
         }
         .footer {
             margin-top: 24px;
@@ -139,15 +229,23 @@
         </div>
 
         <div class="qr-grid">
-            <div class="qr-item">
-                <img src="wechat.jpg" alt="微信赞赏">
+            <div class="qr-item" onclick="downloadQR('wechat.jpg')">
+                <img src="wechat.jpg" alt="微信赞赏" loading="lazy">
                 <div class="qr-label">💳 微信施舍入口</div>
-                <div class="qr-hint">长按识别·扫码打钱</div>
+                <div class="qr-hint">
+                    <span class="mobile-only">长按识别·扫码打钱</span>
+                    <span class="desktop-only">点击下载二维码 · <i class="highlight">扫码打钱</i></span>
+                </div>
+                <div class="download-overlay">⬇ 下载二维码</div>
             </div>
-            <div class="qr-item">
-                <img src="alipay-gift.jpg" alt="支付宝红包">
+            <div class="qr-item" onclick="downloadQR('alipay-gift.jpg')">
+                <img src="alipay-gift.jpg" alt="支付宝红包" loading="lazy">
                 <div class="qr-label">🧧 支付宝红包</div>
-                <div class="qr-hint">领个红包再走? 也是慈善</div>
+                <div class="qr-hint">
+                    <span class="mobile-only">长按识别·扫码打钱</span>
+                    <span class="desktop-only">点击下载二维码 · <i class="highlight">扫码打钱</i></span>
+                </div>
+                <div class="download-overlay">⬇ 下载二维码</div>
             </div>
         </div>
 
@@ -161,5 +259,27 @@
             <span class="blink">●</span> 在线乞讨中 · 感谢每一位金主爸爸
         </div>
     </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        function downloadQR(src) {
+            var link = document.createElement('a');
+            link.href = src;
+            link.download = src;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            var toast = document.getElementById('toast');
+            var filename = src === 'wechat.jpg' ? '微信收款码' : '支付宝红包码';
+            toast.textContent = '📥 ' + filename + ' 已开始下载';
+            toast.classList.add('show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(function () {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
