@@ -3,95 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>☕ 请作者喝杯咖啡</title>
+    <title>赛博乞讨</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: "Microsoft YaHei", "PingFang SC", -apple-system, sans-serif;
+            background: #2c2c2c;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 16px;
         }
         .container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 500px;
+            background: #1a1a1a;
+            border-radius: 4px;
+            padding: 30px 20px 24px;
+            max-width: 420px;
             width: 100%;
             text-align: center;
+            border: 1px solid #3a3a3a;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 24px;
+        .header {
+            margin-bottom: 24px;
+            position: relative;
         }
-        .subtitle {
+        .header h1 {
+            color: #ccc;
+            font-size: 28px;
+            letter-spacing: 6px;
+            font-weight: 400;
+        }
+        .header .sub {
             color: #666;
-            margin-bottom: 30px;
+            font-size: 12px;
+            margin-top: 6px;
+            letter-spacing: 2px;
+        }
+        .tagline {
+            color: #888;
             font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            border-top: 1px dashed #333;
+            border-bottom: 1px dashed #333;
+            padding: 12px 0;
+        }
+        .tagline span {
+            display: block;
+        }
+        .tagline .em {
+            color: #f0c040;
+            font-style: normal;
         }
         .qr-grid {
             display: grid;
-            gap: 20px;
+            gap: 16px;
         }
         .qr-item {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
+            background: #222;
+            border-radius: 4px;
+            padding: 16px;
+            border: 1px solid #333;
         }
         .qr-item img {
             width: 100%;
-            max-width: 250px;
-            border-radius: 8px;
+            max-width: 220px;
+            border-radius: 2px;
+            display: block;
+            margin: 0 auto;
         }
         .qr-label {
-            margin-top: 12px;
-            color: #333;
-            font-size: 16px;
-            font-weight: 500;
+            margin-top: 10px;
+            color: #aaa;
+            font-size: 13px;
+            letter-spacing: 1px;
         }
         .qr-hint {
-            margin-top: 6px;
-            color: #888;
-            font-size: 12px;
+            margin-top: 4px;
+            color: #555;
+            font-size: 11px;
         }
         .footer {
-            margin-top: 30px;
-            color: #999;
-            font-size: 12px;
+            margin-top: 24px;
+            color: #444;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+        .footer .bow {
+            color: #555;
+            font-size: 13px;
+        }
+        .counter {
+            margin-top: 16px;
+            padding: 8px 0;
+            border-top: 1px solid #2a2a2a;
+            color: #555;
+            font-size: 10px;
+        }
+        .blink {
+            animation: blink 1.5s ease-in-out infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>☕ 请作者喝杯咖啡</h1>
-        <p class="subtitle">如果我的内容对你有帮助，欢迎打赏支持</p>
-        
+        <div class="header">
+            <h1>💰 赛博乞讨</h1>
+            <div class="sub">CYBER BEGGING v1.0</div>
+        </div>
+
+        <div class="tagline">
+            <span>行行好 🥺 赏口饭吃</span>
+            <span style="margin-top:6px;">您的每一分<span class="em">施舍</span></span>
+            <span>都是我继续<em style="color:#666;font-style:normal;">摆烂</em>的动力</span>
+        </div>
+
         <div class="qr-grid">
             <div class="qr-item">
                 <img src="wechat.jpg" alt="微信赞赏">
-                <div class="qr-label">微信赞赏</div>
-                <div class="qr-hint">长按识别二维码</div>
+                <div class="qr-label">💳 微信施舍入口</div>
+                <div class="qr-hint">长按识别·扫码打钱</div>
             </div>
-            
             <div class="qr-item">
                 <img src="alipay-gift.jpg" alt="支付宝红包">
-                <div class="qr-label">支付宝红包</div>
-                <div class="qr-hint">扫码领红包，天天有优惠</div>
+                <div class="qr-label">🧧 支付宝红包</div>
+                <div class="qr-hint">领个红包再走? 也是慈善</div>
             </div>
         </div>
-        
+
         <div class="footer">
-            感谢您的支持与信任 ❤️
+            <div class="bow">🙏 好人一生平安</div>
+            <div style="margin-top:4px;">本页没有任何商业模式</div>
+            <div>纯粹是作者 <span style="color:#666;">穷</span> 了</div>
+        </div>
+
+        <div class="counter">
+            <span class="blink">●</span> 在线乞讨中 · 感谢每一位金主爸爸
         </div>
     </div>
 </body>
