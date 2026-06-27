@@ -238,6 +238,15 @@
                 </div>
                 <div class="download-overlay">⬇ 下载二维码</div>
             </div>
+            <div class="qr-item" onclick="downloadQR('alipay.jpg')">
+                <img src="alipay.jpg" alt="支付宝收款" loading="lazy">
+                <div class="qr-label">💰 支付宝施舍入口</div>
+                <div class="qr-hint">
+                    <span class="mobile-only">长按识别·扫码打钱</span>
+                    <span class="desktop-only">点击下载二维码 · <i class="highlight">扫码打钱</i></span>
+                </div>
+                <div class="download-overlay">⬇ 下载二维码</div>
+            </div>
             <div class="qr-item" onclick="downloadQR('alipay-gift.jpg')">
                 <img src="alipay-gift.jpg" alt="支付宝红包" loading="lazy">
                 <div class="qr-label">🧧 支付宝红包</div>
@@ -272,7 +281,10 @@
             document.body.removeChild(link);
 
             var toast = document.getElementById('toast');
-            var filename = src === 'wechat.jpg' ? '微信收款码' : '支付宝红包码';
+            var filename;
+            if (src === 'wechat.jpg') filename = '微信收款码';
+            else if (src === 'alipay.jpg') filename = '支付宝收款码';
+            else filename = '支付宝红包码';
             toast.textContent = '📥 ' + filename + ' 已开始下载';
             toast.classList.add('show');
             clearTimeout(toast._timer);
