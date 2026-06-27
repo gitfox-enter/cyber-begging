@@ -3,91 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>支持生活</title>
+    <title>一封普通的信</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: "Microsoft YaHei", "PingFang SC", -apple-system, sans-serif;
-            background: #f0e8d5;
+            font-family: "Noto Serif SC", "宋体", serif;
+            background: #e5dcca;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 16px;
+            padding: 24px 12px;
         }
-        .container {
-            background: #faf5e6;
-            border-radius: 4px;
-            padding: 30px 20px 24px;
+        .envelope {
             max-width: 640px;
             width: 100%;
-            text-align: center;
-            border: 1px solid #d4c9a5;
-            box-shadow: 0 0 30px rgba(130,100,60,0.15);
-        }
-        .header {
-            margin-bottom: 20px;
+            background: #f6f0e0;
+            border-radius: 2px;
+            padding: 40px 36px 28px;
+            border: 1px solid #ccc0a0;
+            box-shadow: 0 4px 40px rgba(100,70,40,0.12);
             position: relative;
         }
-        .header h1 {
-            color: #5a4030;
-            font-size: 28px;
-            letter-spacing: 6px;
-            font-weight: 400;
+        /* 信纸横线 */
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 56px; bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom,
+                transparent 40px,
+                #d4c9b0 40px,
+                #d4c9b0 41px,
+                transparent 41px
+            );
+            background-size: 1px 32px;
+            opacity: 0.25;
+            pointer-events: none;
         }
-        .header .sub {
-            color: #9a8a70;
-            font-size: 12px;
-            margin-top: 6px;
+
+        /* 邮戳装饰 */
+        .postmark {
+            text-align: center;
+            margin-bottom: 28px;
+            position: relative;
+        }
+        .postmark-circle {
+            display: inline-block;
+            border: 2px solid #b8a888;
+            border-radius: 50%;
+            padding: 8px 22px;
+            position: relative;
+        }
+        .postmark-circle::before,
+        .postmark-circle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40px;
+            border-top: 2px dashed #b8a888;
+        }
+        .postmark-circle::before { right: 100%; margin-right: 8px; }
+        .postmark-circle::after  { left: 100%; margin-left: 8px; }
+        .postmark-date {
+            color: #8a7a60;
+            font-size: 11px;
+            letter-spacing: 3px;
+            font-family: "Noto Serif", "Noto Serif SC", serif;
+        }
+        .postmark-label {
+            color: #8a7a60;
+            font-size: 9px;
+            letter-spacing: 1px;
+            margin-top: 2px;
+            font-family: "Noto Serif", serif;
+        }
+
+        /* 抬头 */
+        .salutation {
+            font-size: 18px;
+            color: #4a3a28;
+            margin-bottom: 24px;
             letter-spacing: 2px;
         }
-        .begging-gif {
-            margin: 16px 0;
+
+        /* 正文 — 手写风格 */
+        .letter-body {
+            font-size: 15px;
+            line-height: 2;
+            color: #4a3a28;
+            text-indent: 2em;
+            margin-bottom: 10px;
+        }
+        .letter-body p {
+            margin-bottom: 14px;
+        }
+
+        /* 签名 */
+        .signature-area {
+            text-align: right;
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px dashed #d4c9b0;
+        }
+        .signature {
+            font-family: "Ma Shan Zheng", "ZCOOL KuaiLe", cursive;
+            font-size: 22px;
+            color: #5a4a38;
+            letter-spacing: 3px;
+        }
+        .signature-date {
+            color: #8a7a60;
+            font-size: 12px;
+            margin-top: 4px;
+            letter-spacing: 1px;
+        }
+
+        /* 收款区域 */
+        .support-section {
+            margin-top: 28px;
+            padding: 20px 0 4px;
+            border-top: 2px solid #d4c9b0;
             text-align: center;
         }
-        .begging-gif img {
-            max-width: 200px;
-            width: 100%;
-            border-radius: 4px;
-        }
-        .tagline {
+        .support-intro {
             color: #6a5a48;
-            font-size: 14px;
-            margin-bottom: 20px;
+            font-size: 13px;
+            margin-bottom: 16px;
             line-height: 1.8;
-            border-top: 1px dashed #d4c9a5;
-            border-bottom: 1px dashed #d4c9a5;
-            padding: 12px 0;
         }
-        .tagline span {
-            display: block;
-        }
-        .tagline .em {
-            color: #c0392b;
-            font-style: normal;
-        }
+
         .qr-grid {
             display: grid;
             gap: 16px;
+            justify-content: center;
+        }
+        @media (min-width: 640px) {
+            .qr-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 639px) {
+            .qr-grid { grid-template-columns: 1fr; max-width: 280px; margin: 0 auto; }
         }
         .qr-item {
             background: #f5edd8;
-            border-radius: 4px;
-            padding: 16px;
+            border-radius: 2px;
+            padding: 14px;
             border: 1px solid #ddd0ad;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            transition: border-color 0.2s;
             cursor: pointer;
             position: relative;
         }
         .qr-item:hover,
         .qr-item:active {
             border-color: #c0b08a;
-            box-shadow: 0 0 12px rgba(130,100,60,0.12);
         }
         .qr-item img {
             width: 100%;
-            max-width: 220px;
+            max-width: 180px;
             border-radius: 2px;
             display: block;
             margin: 0 auto;
@@ -96,75 +170,49 @@
             -webkit-user-drag: none;
         }
         .qr-label {
-            margin-top: 10px;
+            margin-top: 8px;
             color: #7a6a58;
-            font-size: 13px;
+            font-size: 12px;
             letter-spacing: 1px;
         }
         .qr-hint {
-            margin-top: 4px;
+            margin-top: 3px;
             color: #9a8a75;
-            font-size: 11px;
+            font-size: 10px;
         }
-        .qr-hint .highlight {
-            color: #b0a080;
-            font-style: normal;
-        }
-        /* 桌面端 — 二维码并排 + 下载提示 */
-        @media (min-width: 560px) {
-            .qr-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .qr-item img {
-                max-width: 200px;
-            }
-            .qr-hint .mobile-only {
-                display: none;
-            }
-            .qr-hint .desktop-only {
-                display: inline;
-            }
-        }
-        /* 移动端 — 竖排 + 扫码提示 */
-        @media (max-width: 559px) {
-            .qr-grid {
-                grid-template-columns: 1fr;
-            }
-            .container {
-                max-width: 420px;
-            }
-            .qr-item img {
-                max-width: 220px;
-            }
-            .qr-hint .mobile-only {
-                display: inline;
-            }
-            .qr-hint .desktop-only {
-                display: none;
-            }
-        }
-        /* 下载按钮（桌面 hover 显示） */
         .qr-item .download-overlay {
             position: absolute;
-            bottom: 12px;
+            bottom: 8px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(60,45,30,0.75);
+            background: rgba(60,45,30,0.7);
             color: #e8dcc5;
-            font-size: 11px;
-            padding: 4px 12px;
-            border-radius: 3px;
+            font-size: 10px;
+            padding: 3px 10px;
+            border-radius: 2px;
             opacity: 0;
             transition: opacity 0.2s;
             pointer-events: none;
             letter-spacing: 1px;
         }
         @media (hover: hover) {
-            .qr-item:hover .download-overlay {
-                opacity: 1;
-            }
+            .qr-item:hover .download-overlay { opacity: 1; }
         }
-        /* Toast 提示 */
+
+        /* 页脚 */
+        .letter-footer {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #e0d5c0;
+            color: #9a8a75;
+            font-size: 10px;
+            font-family: "Noto Serif", serif;
+            letter-spacing: 1px;
+            line-height: 1.6;
+        }
+
+        /* Toast */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -182,90 +230,90 @@
             z-index: 999;
             white-space: nowrap;
         }
-        .toast.show {
-            opacity: 1;
-        }
-        .footer {
-            margin-top: 24px;
-            color: #8a7a65;
-            font-size: 11px;
-            line-height: 1.8;
-        }
-        .footer .bow {
-            color: #7a6a58;
-            font-size: 13px;
-        }
-        .counter {
-            margin-top: 16px;
-            padding: 8px 0;
-            border-top: 1px solid #d4c9a5;
-            color: #9a8a75;
-            font-size: 10px;
-        }
-        .blink {
-            animation: blink 1.5s ease-in-out infinite;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+        .toast.show { opacity: 1; }
+
+        @media (max-width: 420px) {
+            .envelope { padding: 28px 18px 20px; }
+            .letter-body { font-size: 14px; }
+            .salutation { font-size: 16px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🍵 支持生活</h1>
-            <div class="sub">BUY ME A COFFEE</div>
-        </div>
-
-        <div class="begging-gif">
-            <img src="begging.gif" alt="好心人给点钱吧~">
-        </div>
-
-        <div class="tagline">
-            <span>如果我的内容对你有帮助 🙏</span>
-            <span style="margin-top:6px;">欢迎<span class="em">随意打赏</span>，金额不限</span>
-            <span>每一份支持都是我继续<em style="color:#6a5a48;font-style:normal;">创作和生活</em>的动力</span>
-        </div>
-
-        <div class="qr-grid">
-            <div class="qr-item" onclick="downloadQR('wechat.jpg')">
-                <img src="wechat.jpg" alt="微信赞赏" loading="lazy">
-                <div class="qr-label">💳 微信支付</div>
-                <div class="qr-hint">
-                    <span class="mobile-only">长按识别·扫码打钱</span>
-                    <span class="desktop-only">点击下载二维码 · <i class="highlight">扫码打钱</i></span>
-                </div>
-                <div class="download-overlay">⬇ 下载二维码</div>
-            </div>
-            <div class="qr-item" onclick="downloadQR('alipay.jpg')">
-                <img src="alipay.jpg" alt="支付宝收款" loading="lazy">
-                <div class="qr-label">💰 支付宝</div>
-                <div class="qr-hint">
-                    <span class="mobile-only">长按识别·扫码打钱</span>
-                    <span class="desktop-only">点击下载二维码 · <i class="highlight">扫码打钱</i></span>
-                </div>
-                <div class="download-overlay">⬇ 下载二维码</div>
-            </div>
-            <div class="qr-item" onclick="downloadQR('alipay-gift.jpg')">
-                <img src="alipay-gift.jpg" alt="支付宝红包" loading="lazy">
-                <div class="qr-label">🧧 支付宝红包</div>
-                <div class="qr-hint">
-                    <span class="mobile-only">长按识别·扫码打钱</span>
-                    <span class="desktop-only">点击下载二维码 · <i class="highlight">扫码打钱</i></span>
-                </div>
-                <div class="download-overlay">⬇ 下载二维码</div>
+    <div class="envelope">
+        <!-- 邮戳 -->
+        <div class="postmark">
+            <div class="postmark-circle">
+                <div class="postmark-date">2026 · SUMMER</div>
+                <div class="postmark-label">✦ POSTMARK ✦</div>
             </div>
         </div>
 
-        <div class="footer">
-            <div class="bow">🙏 感谢支持</div>
-            <div style="margin-top:4px;">所有打赏均为自愿赠与</div>
-            <div>用于支持作者的<span style="color:#8a7a65;">日常生活与创作</span></div>
+        <!-- 抬头 -->
+        <div class="salutation">致 看到这封信的你：</div>
+
+        <!-- 正文 -->
+        <div class="letter-body">
+            <p>写这封信的时候，其实想了很久该怎么说。我不太想让别人知道太多关于我的事情，但又确实有些话，想说给愿意听的人。</p>
+
+            <p>我只是一个很普通的学生，在一所很普通的学校念书。去年刚专升本上岸，还没来得及好好喘口气，家里就出了变故。顶梁柱倒了，收入归零。虽然之前有点积蓄撑着，不至于揭不开锅，但那种"一分钱掰成两半花"的感觉，大概只有经历过的人才懂。</p>
+
+            <p>最现实的一次是牙疼。拖了很久实在扛不住才去医院，查出来是根尖炎症。治疗、根管、牙冠，前前后后花了将近五千块。对有些人来说可能不算什么，但那段时间我确实反复算了好几遍，心里挺不是滋味的。</p>
+
+            <p>平时的生活费倒也不是不够花，只是每花一笔钱，心里都会多一份掂量。偶尔也会想，如果自己宽裕一点就好了——不用大富大贵，能少为钱发愁就行。</p>
+
+            <p>说这些不是为了诉苦。我知道比我难的人还有很多，我只是想把真实的状态写下来。如果你愿意支持我，哪怕是一杯奶茶钱，我都会发自内心地感激。如果你暂时不方便，也没关系——你能看到这里，我已经觉得很幸运了。</p>
+
+            <p>生活还在继续，我会努力走下去的。</p>
         </div>
 
-        <div class="counter">
-            <span class="blink">●</span> 在线接受心意 · 感谢每一位朋友
+        <!-- 签名 -->
+        <div class="signature-area">
+            <div class="signature">一个不愿透露姓名的普通人</div>
+            <div class="signature-date">2026 年 · 夏</div>
+        </div>
+
+        <!-- 支持区域 -->
+        <div class="support-section">
+            <div class="support-intro">
+                🙏 如果愿意支持，可以扫下面的码<br>
+                金额随意，每一份善意都会被记住
+            </div>
+
+            <div class="qr-grid">
+                <div class="qr-item" onclick="downloadQR('wechat.jpg')">
+                    <img src="wechat.jpg" alt="微信收款" loading="lazy">
+                    <div class="qr-label">💳 微信</div>
+                    <div class="qr-hint">
+                        <span class="mobile-only">长按识别</span>
+                        <span class="desktop-only">点击下载 · 扫码</span>
+                    </div>
+                    <div class="download-overlay">⬇ 下载二维码</div>
+                </div>
+                <div class="qr-item" onclick="downloadQR('alipay.jpg')">
+                    <img src="alipay.jpg" alt="支付宝收款" loading="lazy">
+                    <div class="qr-label">💰 支付宝</div>
+                    <div class="qr-hint">
+                        <span class="mobile-only">长按识别</span>
+                        <span class="desktop-only">点击下载 · 扫码</span>
+                    </div>
+                    <div class="download-overlay">⬇ 下载二维码</div>
+                </div>
+                <div class="qr-item" onclick="downloadQR('alipay-gift.jpg')">
+                    <img src="alipay-gift.jpg" alt="支付宝红包" loading="lazy">
+                    <div class="qr-label">🧧 支付宝红包</div>
+                    <div class="qr-hint">
+                        <span class="mobile-only">长按识别</span>
+                        <span class="desktop-only">点击下载 · 扫码</span>
+                    </div>
+                    <div class="download-overlay">⬇ 下载二维码</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="letter-footer">
+            <span>— END OF LETTER —</span>
+            <div>感谢你读到这里</div>
         </div>
     </div>
 
@@ -281,17 +329,21 @@
             document.body.removeChild(link);
 
             var toast = document.getElementById('toast');
-            var filename;
-            if (src === 'wechat.jpg') filename = '微信收款码';
-            else if (src === 'alipay.jpg') filename = '支付宝收款码';
-            else filename = '支付宝红包码';
-            toast.textContent = '📥 ' + filename + ' 已开始下载';
+            var map = { 'wechat.jpg': '微信收款码', 'alipay.jpg': '支付宝收款码', 'alipay-gift.jpg': '支付宝红包码' };
+            toast.textContent = '📥 ' + (map[src] || '二维码') + ' 已开始下载';
             toast.classList.add('show');
             clearTimeout(toast._timer);
-            toast._timer = setTimeout(function () {
-                toast.classList.remove('show');
-            }, 2000);
+            toast._timer = setTimeout(function () { toast.classList.remove('show'); }, 2000);
         }
+
+        // 移动端 vs 桌面端提示文字
+        var isMobile = window.innerWidth < 640;
+        document.querySelectorAll('.qr-hint .mobile-only').forEach(function(el) {
+            el.style.display = isMobile ? 'inline' : 'none';
+        });
+        document.querySelectorAll('.qr-hint .desktop-only').forEach(function(el) {
+            el.style.display = isMobile ? 'none' : 'inline';
+        });
     </script>
 </body>
 </html>
